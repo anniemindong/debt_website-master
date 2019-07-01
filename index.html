@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparison of fees</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/slider.css" rel="stylesheet">
+<link href="css/main.css" rel="stylesheet">
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-51714691-1', 'anu.edu.au');
+  ga('send', 'pageview');
+
+</script>
+</head>
+
+<body>
+<div class="container">
+
+<div class="row" id="header">The cost of a university degree</div>
+
+<div class="row">
+<!--Info blurb-->
+<div class="col-md-3">
+<h3>Comparision</h3>
+
+<p>
+You may compare the cost of an education before and after deregulation
+by choosing values for each of the relevant variables.
+</p>
+<p>
+This model is specific to the ANU only in that the
+maximum deregulated tuition fee is computed using the current ANU
+international rates.
+</p>
+</div>
+
+<!--Output stuff here-->
+<div class="col-md-5">
+<!--Chart container-->
+<div id="container"></div>
+<!--Output table-->
+<table class="output-table table table-bordered">
+<tr>
+  <td></td>
+  <td>Fees</td>
+  <td>After</td>
+</tr>
+<tr>
+  <td>Years of Education
+      <a href="#" data-toggle="modal" data-target="#YearsTakenModal">[?]</a>
+  </td>
+  <td id="OldYearsBox"></td>
+  <td id="NewYearsBox"></td>
+</tr>
+<tr>
+  <td>Total cost of education
+      <a href="#" data-toggle="modal" data-target="#TotalPaidModal">[?]</a>
+  </td>
+  <td id="OldPaidBox"></td>
+  <td id="NewPaidBox"></td>
+</tr>
+<tr>
+  <td>Interest paid
+          <a href="#" data-toggle="modal" data-target="#InterestPaidModal">[?]</a>
+  </td>
+  <td id="OldInterestBox"></td>
+  <td id="NewInterestBox"></td>
+</tr>
+<tr>
+  <td>Remaining debt upon retirement
+      <a href="#" data-toggle="modal" data-target="#RemainingDebtModal">[?]</a>
+  </td>
+  <td id="OldUnpaidBox"></td>
+  <td id="NewUnpaidBox"></td>
+</tr>
+</table>
+</div>
+
+<!--Input stuff here-->
+<div class="col-md-4">
+<form class="form-horizontal" id="inputs" role="form">
+  <div class="form-group">
+    <label for="DegreeBand" class="input-label control-label">University</label>
+    <select class="selectpicker form-control" id="DegreeBandSelector">
+    <option value="1">Harvard University</option>
+    <option value="2">Stanford University</option>
+    <!--  <option value="3">Agriculture</option> -->
+    <option value="4">Yale University</option>
+    <!--   <option value="5">Built Environment</option> -->
+    <option value="6">MIT</option>
+    <option value="7">UC Berkeley</option>
+ <!--       <option value="8">Dentistry</option> -->
+    <option value="9">California Institute of Technology</option>
+    <!--    <option value="10">Education</option> -->
+    <option value="11">University of Chicago</option>
+    <option value="12">Cornell University</option>
+       <option value="13">University of Pennsylvania</option>
+<!--     <option value="14">Humanities</option>
+    <option value="15">Law</option>
+    <option value="16">Mathematics</option> -->
+    <!-- <option value="17">Medicine</option> -->
+    <!--    <option value="18">Nursing</option> -->
+<!--     <option value="19">Science</option>
+    <option value="20">Social Studies</option>
+    <option value="21">Statistics</option> -->
+    <!--    <option value="22">Surveying</option> -->
+    <!--    <option value="23">Veterinary Science</option> -->
+<!--     <option value="24">Visual and Performing Arts</option> -->
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="DegreeLength" class="input-label control-label">GPA</label>
+    <button type="button" class="btn" data-toggle="modal" data-target="#DegreeModal">?</button>
+    <input type="text" id="DegreeLengthSlider" class="slider form-control" data-slider-min="0" data-slider-max="4" data-slider-step=".1" data-slider-value="4">
+    <b id="DegreeLengthBox">4</b>
+  </div>
+
+  <div class="form-group">
+    <label for="TuitionFees" class="input-label control-label">SAT</label>
+    <button type="button" class="btn" data-toggle="modal" data-target="#TuitionFeesModal">?</button>
+    <input type="text" id="TuitionFeesSlider" class="slider form-control" data-slider-min="400" data-slider-max="1600" data-slider-step="1"data-slider-value="1200">
+    <b id="TuitionFeesBox">1600</b>
+  </div>
+
+  <div class="form-group">
+    <label for="InflationRate" class="input-label control-label"> national awards</label>
+    <button type="button" class="btn" data-toggle="modal" data-target="#InflationRateModal">?</button>
+    <input type="text" id="InflationRateSlider" class="slider form-control" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="10">
+    <b id="InflationRateBox">10 </b>
+  </div>
+
+  <div class="form-group">
+    <label for="BondRate" class="input-label control-label">School Ranking</label>
+    <button type="button" class="btn" data-toggle="modal" data-target="#TreasuryRateModal">?</button>
+    <input type="text" id="BondRateSlider" class="slider form-control" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="50">
+    <b id="BondRateBox">50 %</b>
+  </div>
+
+  <div class="form-group">
+    <label for="GapYears" class="input-label control-label">Years unemployed</label>
+    <button type="button" class="btn" data-toggle="modal" data-target="#GapYearModal">?</button>
+    <input type="text" id="GapYearSlider" class="slider form-control" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="2">
+    <b id="GapYearBox">2</b>
+  </div>
+
+  <div class="form-group">
+    <label for="StartingSalary" class="input-label control-label">Starting salary</label>
+    <button type="button" class="btn" data-toggle="modal" data-target="#StartingSalaryModal">?</button>
+    <input type="text" id="StartingSalarySlider" class="slider form-control" data-slider-min="30" data-slider-max="100" data-slider-step="1" data-slider-value="52.5">
+    <b id="StartingSalaryBox">$ 52.5 K</b>
+  </div>
+
+  <div class="form-group">
+    <label for="SalaryIncrease" class="input-label control-label">Annual raises as percentage</label>
+    <button type="button" class="btn" data-toggle="modal" data-target="#SalaryIncreaseModal">?</button>
+    <input type="text" id="SalaryIncreaseSlider" class="slider form-control" data-slider-min="0" data-slider-max="10" data-slider-step="0.1" data-slider-value="5">
+    <b id="SalaryIncreaseBox">5.0 %</b>
+  </div>
+</form>
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-4 col-md-offset-4" id="following">
+
+
+</div>
+</div>
+
+
+
+<!-- Information modals -->
+<!--Years-->
+<div class="modal fade bs-example-modal-sm" id="DegreeModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Degree length</h4>
+      </div>
+      <div class="modal-body">
+Choose here the number of years it takes to complete the degree.
+A typical university degree takes 3 to 4 years.
+       </div>
+    </div>
+  </div>
+</div>
+
+<!--Tuition fees-->
+<div class="modal fade bs-example-modal-lg" id="TuitionFeesModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Deregulated annual tuition fees</h4>
+      </div>
+      <div class="modal-body">
+
+
+<center>
+
+</center>
+<!-- <i> Sources: <a href="http://education.gov.au/public-universities">[1]</a>,
+<a href="http://www.innovation.gov.au/highereducation/ResourcesAndPublications/Resources/Documents/Rates2014.pdf">[2]</a>,
+<a href="http://students.anu.edu.au/fees/domestic/csp.php">[3]</a>, and
+<a href="http://students.anu.edu.au/fees/pdfs/ISF-schedule-2014.pdf">[4]</a>.
+</i> -->
+
+<br>
+<br>
+
+
+
+
+       </div>
+    </div>
+  </div>
+</div>
+
+<!--Inflation rate-->
+<div class="modal fade bs-example-modal-lg" id="InflationRateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Inflation Rate</h4>
+      </div>
+      <div class="modal-body">
+<p>
+In the current regulated system, student debt is indexed by the inflation rate.
+
+
+</p>
+<center>
+<img src="inflation.jpg" title="Inflation rate" height="400px" width="800px" />
+</center>
+<p>
+The historical data for the inflation rates was obtained from  <a href="http://www.rba.gov.au/statistics/tables/"> this
+government webpage</a>.  The spreadsheet can be
+ downloaded <a href="http://www.rba.gov.au/statistics/tables/xls/g01hist.xls"> here</a>.
+</p>
+       </div>
+    </div>
+  </div>
+</div>
+
+<!--Interest as 10-yr bond rate-->
+<div class="modal fade bs-example-modal-lg" id="TreasuryRateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Interest Rate</h4>
+      </div>
+      <div class="modal-body">
+<p>
+Under the proposed deregulated system,
+</p>
+<center>
+<img src="treasurybond.jpg" title="Ten-year treasury bond rate" height="400px" width="800px" />
+</center>
+<p>
+The historical data for the 10-year treasury bond rates was obtained from  <a href="http://www.rba.gov.au/statistics/historical-data.html"> this
+government webpage</a>.  The spreadsheets can be
+ downloaded <a href="http://www.rba.gov.au/statistics/tables/xls-hist/f02histhist.xls"> here</a>
+ and <a href="http://www.rba.gov.au/statistics/tables/xls/f02hist.xls"> here</a>.
+</p>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!--Gap years-->
+<div class="modal fade bs-example-modal-sm" id="GapYearModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Years unemployed</h4>
+      </div>
+      <div class="modal-body">
+Choose here the number of years that elapse before the student begins earning the specified starting salary.
+
+       </div>
+    </div>
+  </div>
+</div>
+
+<!--Starting salary-->
+<div class="modal fade bs-example-modal-sm" id="StartingSalaryModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Starting salary</h4>
+      </div>
+      <div class="modal-body">
+<p>
+Choose here a starting salary. 
+</p>
+<p>
+  This figure should be entered in today's dollars.  
+</p>
+<p>
+The default is set at $52.5K, the median grad starting salary in 2012
+<a href="http://www.abs.gov.au/ausstats/abs@.nsf/Lookup/4125.0main+features2320Jan%202013">(source)</a>.
+</p>
+</div>
+    </div>
+  </div>
+</div>
+
+<!--Annual raises-->
+<div class="modal fade bs-example-modal-sm" id="SalaryIncreaseModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Annual raises as percentage</h4>
+      </div>
+      <div class="modal-body">
+Choose here an annual raise given as a percentage.
+
+       </div>
+    </div>
+  </div>
+</div>
+
+<!--Years taken-->
+<div class="modal fade bs-example-modal-sm" id="YearsTakenModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Years taken to repay the loan</h4>
+      </div>
+      <div class="modal-body">
+This number is the number of years that it takes after
+graduation to repay the loan.  If this number is 50, then
+there is still debt remaining 50 years after graduation.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Remaining debt-->
+<div class="modal fade bs-example-modal-sm" id="RemainingDebtModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Remaining debt</h4>
+      </div>
+      <div class="modal-body">
+This model assumes that the student retires 50 years after graduating from university.
+This number reflects the amount of debt remaining on the loan in today's
+dollars
+when the student retires.  It is shown in red
+in the graph.
+       </div>
+    </div>
+  </div>
+</div>
+
+<!--Interest paid-->
+<div class="modal fade bs-example-modal-sm" id="InterestPaidModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Interest paid</h4>
+      </div>
+      <div class="modal-body">
+This number represents the total amount of interest paid for the education
+in today's dollars.  This number is
+shown in blue in the graph.
+       </div>
+    </div>
+  </div>
+</div>
+
+<!--Paid fees-->
+<div class="modal fade bs-example-modal-sm" id="TotalPaidModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Total cost of education</h4>
+      </div>
+      <div class="modal-body">
+<p>
+This number represents the total amount paid for the education including both tuition
+</p>
+
+<p>This number is the cost in today's dollars.
+</p>
+       </div>
+    </div>
+  </div>
+</div>
+
+<!--End info modals-->
+
+<!--Scripts for sliders and chart-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap-slider.js"></script>
+<script src="js/highcharts.js"></script>
+<script src="js/main.js"></script>
+
+</html>

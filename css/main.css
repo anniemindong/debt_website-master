@@ -1,0 +1,64 @@
+/* Page title */
+#header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 300%;
+    padding-top: 18pt;
+    padding-bottom: 25pt;
+}
+
+/* Chart container */
+#container {
+    height: 350px;
+}
+
+#following{
+    margin-top: 20px;
+    text-align: center;
+}
+
+#inputs{
+    border: 1pt #ccc solid;
+    padding: 15px 0px 0px 30px;
+    min-width: 360px;
+}
+
+#footer {
+    margin-top: 40pt;
+    text-align: center;
+    font-size: 80%;
+}
+
+/* ---- INPUT CONTROL STYLES ---- */
+.input-label {
+    font-size: 10pt;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: right;
+    width: 30%;
+    min-width: 80px;
+}
+
+.slider {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 15px;
+    margin-right: 10px;
+}
+
+.slider.slider-horizontal {
+  width: 100px;
+  height: 20px;
+}
+
+.selectpicker {
+    display: inline-block;
+    vertical-align: middle;
+    width: 50%;
+    margin-left: 15px;
+}
+
+.btn {
+    margin-left: 5px;
+    vertical-align: middle;
+}
